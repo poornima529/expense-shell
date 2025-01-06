@@ -42,7 +42,7 @@ VALIDATE $? "Enabling MySQL server"
 systemctl start mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "starting MySQL server"
 
-mysql -h mysql.dawsvaka.shop -u root -pExpenseApp@1 -e 'show databases;'
+mysql -h mysql.dawsvaka.shop -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE_NAME
 
 if [ $? -ne 0 ]
 then
@@ -50,5 +50,5 @@ then
     mysql_secure_installation --set-root-pass ExpenseApp@1
     VALIDATE $? "setting root password"
 else
-    echo -e "MySQL root password already seyup ... $Y SKIPPING $N"
+    echo -e "MySQL root password already setup ... $Y SKIPPING $N"
 fi
