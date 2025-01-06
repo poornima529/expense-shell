@@ -48,7 +48,7 @@ then
     useradd expense &>>$LOG_FILE_NAME
     VALIDATE $? "Adding expense user"
 else
-    echo -e "expense user already exists ... &Y SKIPPING $N"
+    echo -e "expense user already exists ... $Y SKIPPING $N"
 fi        
 
 mkdir -p /app &>>$LOG_FILE_NAME
@@ -58,6 +58,7 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATE $? "Downloding backend"
 
 cd /app
+rm -rf /app/*
 
 unzip /tmp/backend.zip &>>$LOG_FILE_NAME
 VALIDATE $? "unzip backend"
@@ -81,5 +82,5 @@ VALIDATE $? "Daemon Reload"
 systemctl enable backend &>>$LOG_FILE_NAME
 VALIDATE $? "Enable backend"
 
-systemctl start backend &>>$LOG_FILE_NAME
+systemctl restart backend &>>$LOG_FILE_NAME
 VALIDATE $? "Start backend"
